@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "249706152127",
+    "project_id": "siparisin-kapinda",
+    "storage_bucket": "siparisin-kapinda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249706152127:android:7034183fa06916a138860a",
+        "android_client_info": {
+          "package_name": "com.example.siparisin_kapinda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249706152127-p0fdrlr94p27i5rmqf1suad5utbv6nno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcCUGu4b5UUVQqhX0BklvxvNUFmGS4x5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249706152127-p0fdrlr94p27i5rmqf1suad5utbv6nno.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
