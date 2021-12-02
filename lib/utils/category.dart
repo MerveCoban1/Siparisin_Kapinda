@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:siparisin_kapinda/models/sub_category_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:siparisin_kapinda/service/firestore_service.dart';
 import 'package:siparisin_kapinda/widgets/category_card_widget.dart';
 
 class Category extends StatefulWidget {
@@ -12,12 +11,15 @@ class Category extends StatefulWidget {
 }
 
 class _CategoryState extends State<Category> {
+
+  FirestoreService service=FirestoreService();
   late List<Widget> listToShow=[];
   late List<Widget> listToShow2=[];
-  late List<SubCategoryModel> subCategories1=<SubCategoryModel>[];
-  late List<SubCategoryModel> subCategories2=<SubCategoryModel>[];
-  late List<SubCategoryModel> subCategories3=<SubCategoryModel>[];
-  late List<SubCategoryModel> subCategories4=<SubCategoryModel>[];
+
+  var subCategories1=[];
+  var subCategories2=[];
+  var subCategories3=[];
+  var subCategories4=[];
   @override
   void initState(){
     super.initState();
@@ -37,50 +39,11 @@ class _CategoryState extends State<Category> {
   }
 
   void fetchData() async{
-    await FirebaseFirestore.instance.collection('subcategory').where('categoryId', isEqualTo: 1).get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        setState(() {
-          subCategories1.add(SubCategoryModel(
-              doc["id"],
-              doc["categoryId"],
-              doc["image"],
-              doc["name"]));
-        });
-      });
-    });
-    await FirebaseFirestore.instance.collection('subcategory').where('categoryId', isEqualTo: 2).get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        setState(() {
-          subCategories2.add(SubCategoryModel(
-              doc["id"],
-              doc["categoryId"],
-              doc["image"],
-              doc["name"]));
-        });
-      });
-    });
-    await FirebaseFirestore.instance.collection('subcategory').where('categoryId', isEqualTo: 3).get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        setState(() {
-          subCategories3.add(SubCategoryModel(
-              doc["id"],
-              doc["categoryId"],
-              doc["image"],
-              doc["name"]));
-        });
-      });
-    });
-    await FirebaseFirestore.instance.collection('subcategory').where('categoryId', isEqualTo: 4).get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        setState(() {
-          subCategories4.add(SubCategoryModel(
-              doc["id"],
-              doc["categoryId"],
-              doc["image"],
-              doc["name"]));
-        });
-      });
-    });
+    subCategories1=await service.getSubcategoriesByCategoryId(1);
+    subCategories2=await service.getSubcategoriesByCategoryId(2);
+    subCategories3=await service.getSubcategoriesByCategoryId(3);
+    subCategories4=await service.getSubcategoriesByCategoryId(4);
+
     //selection
     if (widget.categoryName == 'yemek') {
       subCategories1.forEach((element) {

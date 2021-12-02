@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:siparisin_kapinda/utils/base_app_bar.dart';
 import 'package:siparisin_kapinda/views/cart_screen.dart';
-import 'package:siparisin_kapinda/views/products_screen.dart';
+import 'package:siparisin_kapinda/views/categories_screen.dart';
 import 'package:siparisin_kapinda/views/profile_screen.dart';
-
 
 class Home extends StatefulWidget {
   @override
@@ -16,35 +16,17 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _contents = [ProductsScreen(), CartScreen(),ProfileScreen()];
+    _contents = [CategoriesScreen(), CartScreen(),ProfileScreen()];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar(),
+      appBar: BaseAppBar(title: 'Siparişin Kapında', appBar: AppBar(), widgets: <Widget>[Icon(Icons.more_vert)]),
       body: _contents[_activeContentNo],
       drawer: buildDrawer(context),
       bottomNavigationBar: buildBottomNavigationBar(),
-    );
-  }
-
-  AppBar buildAppBar() {
-    return AppBar(
-      iconTheme: IconThemeData(
-        color: Colors.grey[400],
-      ),
-      backgroundColor: Colors.white,
-      elevation: 0.0,
-      title: Text(
-        "Siparişin Kapında",
-        style: TextStyle(
-          fontSize: 18.0,
-          fontWeight: FontWeight.bold,
-          color: Colors.grey,
-        ),
-      ),
     );
   }
 

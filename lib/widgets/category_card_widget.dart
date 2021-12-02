@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:siparisin_kapinda/models/sub_category_model.dart';
+import 'package:siparisin_kapinda/views/products_screen.dart';
 
 class CategoryCardWidget extends StatefulWidget {
   late SubCategoryModel subCategories;
@@ -15,7 +16,7 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget>{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailScreen(widget.name,widget.image,widget.companyName,widget.id)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductsScreen(widget.subCategories)));
       },
       child: Container(
         decoration: BoxDecoration(

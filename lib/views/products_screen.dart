@@ -1,66 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:siparisin_kapinda/utils/category.dart';
+import 'package:siparisin_kapinda/models/sub_category_model.dart';
+import 'package:siparisin_kapinda/service/firestore_service.dart';
+import 'package:siparisin_kapinda/utils/base_app_bar.dart';
+import 'package:siparisin_kapinda/widgets/product_card_widget.dart';
 
 class ProductsScreen extends StatefulWidget {
+  final SubCategoryModel subCategory;
+  ProductsScreen(this.subCategory);
+
   @override
   _ProductsScreenState createState() => _ProductsScreenState();
 }
 
-class _ProductsScreenState extends State<ProductsScreen> with SingleTickerProviderStateMixin {
-  late TabController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(length: 4, vsync: this);
-  }
+class _ProductsScreenState extends State<ProductsScreen>{
+
+  FirestoreService service=FirestoreService();
+  var productList=[];
 
   @override
+  void initState() {
+    fetchProducts();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TabBar(
-          controller: controller,
-          indicatorColor: Colors.red[400],
-          labelColor: Colors.red[400],
-          unselectedLabelColor: Colors.grey,
-          isScrollable: true,
-          labelStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
-          tabs: [
-            Tab(
-              child: Text(
-                "Yemek",
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: BaseAppBar(title: widget.subCategory.name, appBar: AppBar(), widgets: <Widget>[Icon(Icons.more_vert)]),
+      body: ListView(
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
               ),
-            ),
-            Tab(
-              child: Text(
-                "İçecek",
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Tatlı",
-              ),
-            ),
-            Tab(
-              child: Text(
-                "Aparatif",
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 10.0,),
-        Expanded(
-          child: TabBarView(
-            controller: controller,
-            children: [
-              Category("yemek"),
-              Category("icecek"),
-              Category("tatli"),
-              Category("aparatif"),
-            ],
+              width: (MediaQuery.of(context).size.height),
+              height: (MediaQuery.of(context).size.height)*0.80,
+              child: ListView.builder(
+                itemCount: productList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ProductCardWidget(productList[index]);
+                },
+              )
           ),
-        ),
-      ],
+        ],
+      ),
     );
+  }
+
+  void fetchProducts() async{
+    //product doldurulacak firebase ile
+    var incomingProductList=await service.getProductsBySubcategoryId(widget.subCategory.id);
+    if(incomingProductList.isEmpty){
+      print("Veri yok");
+    }else{
+      setState(() {
+        productList=incomingProductList;
+      });
+    }
   }
 }
