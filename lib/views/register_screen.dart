@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_local/auth/components/background.dart';
-import 'package:flutter_app_local/auth/components/rounded_button.dart';
-import 'package:flutter_app_local/auth/components/rounded_input_field.dart';
-import 'package:flutter_app_local/auth/login/login_screen.dart';
+import '/auth/components/background.dart';
+import '/auth/components/rounded_input_field.dart';
+import '/auth/components/rounded_button.dart';
+import 'login_screen.dart';
+
+class RegisterScreen extends StatelessWidget {
+  late String _eMail;
+  late String _firstName;
+  late String _lastName;
+  late String _phoneNumber;
+  late String _password;
+  late String _passwordAgain;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Body());
+  }
+}
 
 class Body extends StatelessWidget {
   late String _eMail;
@@ -11,7 +25,7 @@ class Body extends StatelessWidget {
   late String _phoneNumber;
   late String _password;
   late String _passwordAgain;
-  
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,13 +35,13 @@ class Body extends StatelessWidget {
       haveBackButton: true,
       onBackButtonPress: () {
         Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LoginScreen();
-                  },
-                ),
-              );
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return LoginScreen();
+            },
+          ),
+        );
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -64,14 +78,14 @@ class Body extends StatelessWidget {
           ),
           RoundedButton(
             text: "Register",
-            onPress: () { _register(); },
+            onPress: () { _register(context); },
           ),
         ],
       ),
     );
   }
 
-  void _register() {
-
+  void _register(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) { return LoginScreen();}));
   }
 }
