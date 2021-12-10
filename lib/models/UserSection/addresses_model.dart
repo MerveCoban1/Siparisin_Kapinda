@@ -1,9 +1,11 @@
 class AddressesModel {
   var id;
-  var address;
+  var title;
+  var fulladdress;
 
   AddressesModel(
     this.id,
-    this.address,
+    this.title,
+    this.fulladdress,
   );
 }

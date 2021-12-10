@@ -5,6 +5,7 @@ import 'package:siparisin_kapinda/models/category_model.dart';
 import 'package:siparisin_kapinda/models/company_model.dart';
 import 'package:siparisin_kapinda/models/product_model.dart';
 import 'package:siparisin_kapinda/models/sub_category_model.dart';
+import 'dart:developer';
 
 class FirestoreService {
   //henüz kullanılmıyor-extra
@@ -71,29 +72,92 @@ class FirestoreService {
     return company;
   }
 
-  Future<List> getCart() async {
+  Future<List> getCart(var userID) async {
     late List<CartModel> cartList = <CartModel>[];
     await FirebaseFirestore.instance
         .collection('cart')
+        .where('user_id', isEqualTo: userID)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        cartList.add(CartModel(doc["item_id"], doc["quantity"]));
+        List.from(doc['items']).forEach((element) {
+          cartList.add(CartModel(element["item_id"], element["quantity"]));
+        });
       });
     });
     return cartList;
   }
 
-  Future<List> getAddresses() async {
-    late List<AddressesModel> list = <AddressesModel>[];
+  Future getProductDetails(var productID) async {
+    late ProductModel product;
     await FirebaseFirestore.instance
-        .collection('addresses')
+        .collection('products')
+        .where('id', isEqualTo: productID)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        list.add(AddressesModel(doc["id"], doc["address"]));
+        product = ProductModel(doc["available"], doc["company_id"], doc["id"],
+            doc["image"], doc["name"], doc["price"], doc["subCategoryId"]);
+      });
+    });
+    return product;
+  }
+
+  Future<List> getAddresses(var userID) async {
+    late List<AddressesModel> list = <AddressesModel>[];
+    await FirebaseFirestore.instance
+        .collection('addresses')
+        .where('user_id', isEqualTo: userID)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        list.add(AddressesModel(doc["id"], doc["title"], doc["fulladdress"]));
       });
     });
     return list;
+  }
+
+  Future makePayment(var userID, var addressID) async {
+    try {
+      var itemList = await getCart(userID);
+
+      var res = await FirebaseFirestore.instance.collection('orders').add({
+        'user_id': userID,
+        'items': itemList.map((item) => item.toJson()).toList(),
+        'address_id': addressID
+      });
+
+      await cleanCart(userID);
+
+      return true;
+    } catch (err) {
+      print(err);
+      return false;
+    }
+  }
+
+  Future cleanCart(var userID) async {
+    try {
+      var documentID = "0";
+      var collection = FirebaseFirestore.instance
+          .collection('cart')
+          .where('user_id', isEqualTo: userID);
+
+      var querySnapshots = await collection.get();
+
+      for (var snapshot in querySnapshots.docs) {
+        documentID = snapshot.id;
+      }
+
+      var res = await FirebaseFirestore.instance
+          .collection('cart')
+          .doc(documentID)
+          .update({'user_id': userID, 'items': []});
+
+      return true;
+    } catch (err) {
+      print(err);
+      return false;
+    }
   }
 }
