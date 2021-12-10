@@ -6,6 +6,8 @@ import 'package:siparisin_kapinda/views/categories_screen.dart';
 import 'package:siparisin_kapinda/views/profile_screen.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -24,7 +26,10 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: BaseAppBar(title: 'Siparişin Kapında', appBar: AppBar(), widgets: <Widget>[Icon(Icons.more_vert)]),
+      appBar: BaseAppBar(
+          title: 'Siparişin Kapında',
+          appBar: AppBar(),
+          widgets: <Widget>[Icon(Icons.more_vert)]),
       body: _contents[_activeContentNo],
       drawer: buildDrawer(context),
       bottomNavigationBar: buildBottomNavigationBar(),
@@ -66,7 +71,7 @@ class _HomeState extends State<Home> {
           UserAccountsDrawerHeader(
             accountName: Text("Merve Çoban"),
             accountEmail: Text("mervecoban@gmail.com"),
-            currentAccountPicture:CircleAvatar(
+            currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage("assets/images/logo.png"),
               radius: 50.0,
               backgroundColor: Colors.grey,
@@ -78,16 +83,12 @@ class _HomeState extends State<Home> {
           ListTile(
             leading: Icon(Icons.note),
             title: Text("Siparişlerim"),
-            onTap: (){
-
-            },
+            onTap: () {},
           ),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text("Ayarlar"),
-            onTap: (){
-
-            },
+            onTap: () {},
           ),
           Divider(
             height: 10,
@@ -97,8 +98,13 @@ class _HomeState extends State<Home> {
           ListTile(
             leading: Icon(Icons.logout),
             title: Text("Çıkış Yap"),
+<<<<<<< HEAD
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) { return LoginScreen();}));
+=======
+            onTap: () {
+              Navigator.pop(context);
+>>>>>>> a97181d (.)
             },
           ),
         ],

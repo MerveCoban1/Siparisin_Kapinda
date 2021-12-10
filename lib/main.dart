@@ -4,11 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:siparisin_kapinda/views/home.dart';
 import 'views/login_screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
