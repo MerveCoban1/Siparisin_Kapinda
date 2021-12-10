@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
 import 'package:siparisin_kapinda/utils/base_app_bar.dart';
 import 'package:siparisin_kapinda/views/cart_screen.dart';
 import 'package:siparisin_kapinda/views/categories_screen.dart';
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _contents = [CategoriesScreen(), CartScreen(),ProfileScreen()];
+    _contents = [CategoriesScreen(), CartScreen(), ProfilePage(), LoginScreen()];
   }
 
   @override
@@ -97,7 +98,7 @@ class _HomeState extends State<Home> {
             leading: Icon(Icons.logout),
             title: Text("Çıkış Yap"),
             onTap: (){
-              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) { return LoginScreen();}));
             },
           ),
         ],
