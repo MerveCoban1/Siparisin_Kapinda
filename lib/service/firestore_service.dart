@@ -160,4 +160,58 @@ class FirestoreService {
       return false;
     }
   }
+
+  Future addToCart(var userID, var item_id) async {
+    try {
+      var itemList = await getCart(userID);
+
+      if (itemList.isEmpty) {
+        var res = await FirebaseFirestore.instance.collection('cart').add({
+          'user_id': userID,
+          'items': [
+            {'item_id': item_id, 'quantity': 1}
+          ],
+        });
+      } else {
+        late List<CartModel> tempArr = <CartModel>[];
+        var exist = false;
+        itemList.forEach((element) {
+          if (element.item_id == item_id) {
+            exist = true;
+            tempArr.add(CartModel(item_id, element.quantity + 1));
+          } else {
+            tempArr.add(CartModel(element.item_id, element.quantity));
+          }
+        });
+
+        if (exist == false) {
+          tempArr.add(CartModel(item_id, 1));
+        }
+
+        var documentID = "0";
+        var collection = FirebaseFirestore.instance
+            .collection('cart')
+            .where('user_id', isEqualTo: userID);
+
+        var querySnapshots = await collection.get();
+
+        for (var snapshot in querySnapshots.docs) {
+          documentID = snapshot.id;
+        }
+
+        var res = await FirebaseFirestore.instance
+            .collection('cart')
+            .doc(documentID)
+            .update({
+          'user_id': userID,
+          'items': tempArr.map((item) => item.toJson()).toList()
+        });
+      }
+
+      return true;
+    } catch (err) {
+      print(err);
+      return false;
+    }
+  }
 }
