@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:siparisin_kapinda/components/OrderSection/Cart/screen.dart';
 import 'package:siparisin_kapinda/components/OrderSection/Checkout/index.dart';
 import 'package:siparisin_kapinda/components/OrderSection/stepper.dart';
+import 'package:siparisin_kapinda/views/search_screen.dart';
 import 'login_screen.dart';
 import 'package:siparisin_kapinda/utils/base_app_bar.dart';
 import 'package:siparisin_kapinda/views/categories_screen.dart';
@@ -23,6 +24,7 @@ class _HomeState extends State<Home> {
     super.initState();
     _contents = [
       CategoriesScreen(),
+      SearchScreen(),
       CartScreen(),
       ProfilePage(),
       LoginScreen()
@@ -32,6 +34,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'kapinda',
       // Start the app with the "/" named route. In this case, the app starts
       // on the FirstScreen widget.
@@ -63,6 +66,10 @@ class _HomeState extends State<Home> {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
+          title: Text(""),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
           title: Text(""),
         ),
         BottomNavigationBarItem(

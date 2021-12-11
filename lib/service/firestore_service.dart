@@ -5,7 +5,6 @@ import 'package:siparisin_kapinda/models/category_model.dart';
 import 'package:siparisin_kapinda/models/company_model.dart';
 import 'package:siparisin_kapinda/models/product_model.dart';
 import 'package:siparisin_kapinda/models/sub_category_model.dart';
-import 'dart:developer';
 
 class FirestoreService {
   //henüz kullanılmıyor-extra
@@ -35,6 +34,39 @@ class FirestoreService {
       });
     });
     return subcategoryList;
+  }
+
+  Future<List> getAllProducts() async {
+    late List<ProductModel> productList = <ProductModel>[];
+    await FirebaseFirestore.instance
+        .collection('products')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        productList.add(ProductModel(
+            doc["available"],
+            doc["company_id"],
+            doc["id"],
+            doc["image"],
+            doc["name"],
+            doc["price"],
+            doc["subCategoryId"]));
+      });
+    });
+    return productList;
+  }
+
+  Future<List<String>> getAllProductNames() async {
+    late List<String> productList = <String>[];
+    await FirebaseFirestore.instance
+        .collection('products')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        productList.add(doc["name"]);
+      });
+    });
+    return productList;
   }
 
   Future<List> getProductsBySubcategoryId(var subCategoryId) async {
