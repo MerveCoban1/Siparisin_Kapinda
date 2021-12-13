@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:siparisin_kapinda/auth/user_model.dart';
 import 'package:siparisin_kapinda/models/OrderSection/cart_model.dart';
 import 'package:siparisin_kapinda/models/UserSection/addresses_model.dart';
 import 'package:siparisin_kapinda/models/category_model.dart';

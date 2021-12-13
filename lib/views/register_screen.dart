@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:siparisin_kapinda/auth/auth_service.dart';
 import '/auth/components/background.dart';
 import '/auth/components/rounded_input_field.dart';
 import '/auth/components/rounded_button.dart';
@@ -25,6 +26,8 @@ class Body extends StatelessWidget {
   late String _phoneNumber;
   late String _password;
   late String _passwordAgain;
+
+  AuthService service = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +89,7 @@ class Body extends StatelessWidget {
   }
 
   void _register(BuildContext context) {
+    service.createUser(this._eMail, this._firstName, this._lastName, this._phoneNumber, this._password, this._passwordAgain);
     Navigator.push(context, MaterialPageRoute(builder: (context) { return LoginScreen();}));
   }
 }
