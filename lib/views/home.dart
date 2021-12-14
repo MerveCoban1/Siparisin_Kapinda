@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:siparisin_kapinda/auth/auth_service.dart';
+import 'package:siparisin_kapinda/auth/user_model.dart';
 import 'package:siparisin_kapinda/components/OrderSection/Cart/screen.dart';
 import 'package:siparisin_kapinda/components/OrderSection/Checkout/index.dart';
 import 'package:siparisin_kapinda/components/OrderSection/stepper.dart';
@@ -7,6 +9,7 @@ import 'login_screen.dart';
 import 'package:siparisin_kapinda/utils/base_app_bar.dart';
 import 'package:siparisin_kapinda/views/categories_screen.dart';
 import 'package:siparisin_kapinda/views/profile_screen.dart';
+import 'package:siparisin_kapinda/globals.dart' as globals;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,9 +22,17 @@ class _HomeState extends State<Home> {
   List<Widget> _contents = [];
   int _activeContentNo = 0;
 
+  AuthService _authService = AuthService();
+  late String fullName = '';
+  late String email = '';
+
   @override
   void initState() {
     super.initState();
+    _authService.getUserById(globals.loggedUserId).then((result) {
+      fullName = result.firstName + ' ' + result.lastName;
+      email = result.email;
+    });
     _contents = [
       CategoriesScreen(),
       SearchScreen(),
@@ -66,19 +77,19 @@ class _HomeState extends State<Home> {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          title: Text(""),
+          label: "",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
-          title: Text(""),
+          label: "",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.shopping_cart),
-          title: Text(""),
+          label: "",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          title: Text(""),
+          label: "",
         ),
       ],
       onTap: (int positionNo) {
@@ -95,8 +106,8 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.all(0.0),
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text("Merve Çoban"),
-            accountEmail: Text("mervecoban@gmail.com"),
+            accountName: Text(fullName),
+            accountEmail: Text(email),
             currentAccountPicture: CircleAvatar(
               backgroundImage: AssetImage("assets/images/logo.png"),
               radius: 50.0,
@@ -126,6 +137,7 @@ class _HomeState extends State<Home> {
             title: Text("Çıkış Yap"),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
+                globals.loggedUserId = 0;
                 return LoginScreen();
               }));
             },
