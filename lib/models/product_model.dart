@@ -6,6 +6,8 @@ class ProductModel{
   var name;
   var price;
   var subCategoryId;
+  var description;
+  var extra;
 
-  ProductModel(this.available,this.company_id,this.id,this.image,this.name,this.price,this.subCategoryId);
+  ProductModel(this.available,this.company_id,this.id,this.image,this.name,this.price,this.subCategoryId,this.description,this.extra);
 }

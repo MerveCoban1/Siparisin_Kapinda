@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:siparisin_kapinda/models/product_model.dart';
 import 'package:siparisin_kapinda/service/firestore_service.dart';
+import 'package:siparisin_kapinda/widgets/extra_card_widget.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   ProductModel product;
@@ -13,6 +14,19 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   FirestoreService service = FirestoreService();
+  var productExtraKeys;
+  var productExtraValues;
+  var selectedName=[];
+
+  @override
+  void initState() {
+    deleteExtras();
+    setState(() {
+      productExtraKeys=widget.product.extra.keys.toList();
+      productExtraValues=widget.product.extra.values.toList();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +85,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Container(
                 width: MediaQuery.of(context).size.width * 0.90,
-                height: MediaQuery.of(context).size.height * 0.25,
+                height: MediaQuery.of(context).size.height * 0.08,
                 child: Text(
-                  "Bu bölümde ürün açıklaması bulunacak. ",
+                  ""+widget.product.description,
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -82,6 +96,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              Text(
+                "Lütfen istediğiniz ürünleri seçiniz.",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[500],
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.90,
+                height: MediaQuery.of(context).size.height * 0.07,
+                child:  ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: productExtraKeys.length,
+                  itemBuilder: (BuildContext context, int index) => Card(
+                    child: ExtraCardWidget(widget.product.id,productExtraKeys[index],productExtraValues[index],selectedName),
+                  ),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               Container(
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: MediaQuery.of(context).size.height * 0.05,
@@ -100,7 +136,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 onTap: () {
                   if (widget.product.available) {
                     Navigator.pop(context);
-                    service.addToCart(1, widget.product.id);
+                    service.addToCart2(1, widget.product.id);
                   }
                 },
                 child: Container(
@@ -129,5 +165,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ],
       ),
     );
+  }
+
+  void deleteExtras() async{
   }
 }

@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:siparisin_kapinda/auth/user_model.dart';
 import 'package:siparisin_kapinda/models/OrderSection/cart_model.dart';
 import 'package:siparisin_kapinda/models/UserSection/addresses_model.dart';
 import 'package:siparisin_kapinda/models/category_model.dart';
 import 'package:siparisin_kapinda/models/company_model.dart';
+import 'package:siparisin_kapinda/models/extra_model.dart';
 import 'package:siparisin_kapinda/models/product_model.dart';
 import 'package:siparisin_kapinda/models/sub_category_model.dart';
 
 class FirestoreService {
+
   //henüz kullanılmıyor-extra
   Future<List> getAllCategories() async {
     late List<CategoryModel> categoryList = <CategoryModel>[];
@@ -51,7 +52,10 @@ class FirestoreService {
             doc["image"],
             doc["name"],
             doc["price"],
-            doc["subCategoryId"]));
+            doc["subCategoryId"],
+            doc["description"],
+            doc["extra"]
+        ));
       });
     });
     return productList;
@@ -85,7 +89,10 @@ class FirestoreService {
             doc["image"],
             doc["name"],
             doc["price"],
-            doc["subCategoryId"]));
+            doc["subCategoryId"],
+            doc["description"],
+            doc["extra"]
+        ));
       });
     });
     return productList;
@@ -130,7 +137,7 @@ class FirestoreService {
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         product = ProductModel(doc["available"], doc["company_id"], doc["id"],
-            doc["image"], doc["name"], doc["price"], doc["subCategoryId"]);
+            doc["image"], doc["name"], doc["price"], doc["subCategoryId"], doc["description"], doc["extra"]);
       });
     });
     return product;
@@ -194,7 +201,19 @@ class FirestoreService {
     }
   }
 
-  Future addToCart(var userID, var item_id) async {
+  Future addToCart2(var userID, var item_id) async {
+    getExtras(item_id).then((value) =>
+    {
+      //value değeri de eklenecek
+      addToCart(userID, item_id,value),
+      deleteExtrasByProductId(item_id), //eklendikten sonra extras collectiondan silindi.
+    });
+  }
+
+  Future addToCart(var userID, var item_id, var value) async {
+    print("******************");
+    print(value); //[Instance of extramodel,] şeklinde dizi olarak geliyor.
+    print("******************");
     try {
       var itemList = await getCart(userID);
 
@@ -240,11 +259,46 @@ class FirestoreService {
           'items': tempArr.map((item) => item.toJson()).toList()
         });
       }
-
       return true;
     } catch (err) {
       print(err);
       return false;
+    }
+  }
+
+  Future<List> getExtras(item_id)  async{
+    late List<ExtraModel> extraList = <ExtraModel>[];
+    await FirebaseFirestore.instance
+        .collection('extras')
+        .where('productId', isEqualTo: item_id)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        extraList.add(ExtraModel(doc["productId"],doc["name"]));
+      });
+    });
+    return extraList;
+  }
+
+  Future addExtras(productId,name) async {
+    await FirebaseFirestore.instance
+        .collection('extras')
+        .add({'productId': productId,'name': name});
+  }
+
+  Future deleteExtrasByName(productId,name) async {
+    var collection = FirebaseFirestore.instance.collection('extras');
+    var snapshot = await collection.where('name', isEqualTo: name).where('productId', isEqualTo: productId).get();
+    for (var doc in snapshot.docs) {
+      await doc.reference.delete();
+    }
+  }
+
+  Future deleteExtrasByProductId(productId) async {
+    var collection = FirebaseFirestore.instance.collection('extras');
+    var snapshot = await collection.where('productId', isEqualTo: productId).get();
+    for (var doc in snapshot.docs) {
+      await doc.reference.delete();
     }
   }
 }
