@@ -77,7 +77,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       children: <Widget>[
-                        SizedBox(height: 5),
+                        SizedBox(height: 10),
                         Container(
                           width: 50,
                           height: 70,
@@ -106,33 +106,26 @@ class _SearchScreenState extends State<SearchScreen> {
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       children: <Widget>[
-                        if (showList == true)
+                        if (editingController.text == "")
                           Container(
-                            child: Container(
-                              height: 100,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: items.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Text('${items[index]}'),
-                                  );
-                                },
-                              ),
-                            ),
+                              //idth: 50,
+                              height: 170,
+                              color: Colors.grey[200],
+                              child: AllCategories()),
+                        if (editingController.text == "")
+                          Container(
+                            //width: 50,
+                            height: MediaQuery.of(context).size.height - 410,
+                            color: Colors.green,
+                            child: SearchItems(editingController.text),
                           ),
-                        Container(
-                          width: 50,
-                          height: 170,
-                          color: Colors.grey[200],
-                          child: AllCategories(),
-                        ),
-                        Container(
-                          width: 50,
-                          height: 270,
-                          color: Colors.green,
-                          child: SearchItems(),
-                        ),
+                        if (editingController.text != "")
+                          Container(
+                            //width: 50,
+                            height: MediaQuery.of(context).size.height - 240,
+                            color: Colors.green,
+                            child: SearchItems(editingController.text),
+                          ),
                       ],
                     ),
                   ),

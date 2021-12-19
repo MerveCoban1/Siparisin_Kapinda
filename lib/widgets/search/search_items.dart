@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:siparisin_kapinda/service/firestore_service.dart';
 import 'package:siparisin_kapinda/widgets/product_card_widget.dart';
+import 'package:siparisin_kapinda/widgets/search/search_product_card_widget.dart';
 
 class SearchItems extends StatefulWidget {
-  const SearchItems({Key? key}) : super(key: key);
+  late String text;
+  SearchItems(this.text);
 
   @override
   _SearchItemsState createState() => _SearchItemsState();
@@ -30,7 +32,7 @@ class _SearchItemsState extends State<SearchItems> {
       child: ListView.builder(
         itemCount: productList.length,
         itemBuilder: (BuildContext context, int index) {
-          return ProductCardWidget(productList[index]);
+          return SearchProductCardWidget(productList[index], widget.text);
         },
       ),
     );
