@@ -119,7 +119,7 @@ class _AddressesPageState extends State<AddressesPage> {
                       ]);
                     });
               } else {
-                return const Text("bggnb ");
+                return const Text(" ");
               }
             },
           ),
