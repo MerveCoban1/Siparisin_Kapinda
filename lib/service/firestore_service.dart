@@ -6,9 +6,74 @@ import 'package:siparisin_kapinda/models/company_model.dart';
 import 'package:siparisin_kapinda/models/extra_model.dart';
 import 'package:siparisin_kapinda/models/product_model.dart';
 import 'package:siparisin_kapinda/models/sub_category_model.dart';
+import 'package:siparisin_kapinda/models/user_addresses_model.dart';
+import 'package:siparisin_kapinda/models/user_info_model.dart';
 
 class FirestoreService {
+  //Adres bilgileri Firebaseden alınıyor.
+  Future<List> getUserAddresses(var userID) async {
+    late List<Addresses> list = <Addresses>[];
+    await FirebaseFirestore.instance
+        .collection('addresses')
+        .where('user_id', isEqualTo: userID)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        list.add(Addresses(
+            doc["id"], doc["title"], doc["fulladdress"], doc["documentId"]));
+        print(doc["id"]);
+        print(doc["title"]);
+        print(doc["fulladdress"]);
+      }
+    });
+    print(list);
+    return list;
+  }
 
+  //Kullanıcı bilgileri Firebase'den alınıyor.
+  Future<List> getUserInfo(var userID) async {
+    late List<User> list = <User>[];
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where('userId', isEqualTo: userID)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        list.add(User(doc["firstName"], doc["lastName"], doc["email"],
+            doc["phoneNumber"]));
+
+        print(doc["firstName"]);
+        print(doc["lastName"]);
+        print(doc["email"]);
+      }
+    });
+    print(list);
+    return list;
+  }
+
+  //Kullanıcı bilgileri günleniyor.
+  updateInformation(int userId, fNameController, lNameController,
+      eMailController, phoneNoController) {
+    var ref =
+        FirebaseFirestore.instance.collection('users').doc(userId.toString());
+
+    ref
+        .update({'firstName': fNameController})
+        .then((value) => print("firstName Updated"))
+        .catchError((error) => print("Failed to update firstName: $error"));
+    ref
+        .update({'lastName': lNameController})
+        .then((value) => print("lastName Updated"))
+        .catchError((error) => print("Failed to update lastName: $error"));
+    ref
+        .update({'email': eMailController})
+        .then((value) => print("email Updated"))
+        .catchError((error) => print("Failed to update email: $error"));
+    ref
+        .update({'phoneNumber': phoneNoController})
+        .then((value) => print("phoneNumber Updated"))
+        .catchError((error) => print("Failed to update phoneNumber: $error"));
+  }
   //henüz kullanılmıyor-extra
   Future<List> getAllCategories() async {
     late List<CategoryModel> categoryList = <CategoryModel>[];
