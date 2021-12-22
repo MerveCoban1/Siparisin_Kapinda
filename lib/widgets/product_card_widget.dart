@@ -17,11 +17,19 @@ class _ProductCardWidgetState extends State<ProductCardWidget>{
 
   FirestoreService service=FirestoreService();
   late CompanyModel companyModel=new CompanyModel(0, "-");
+  var imageControl=0;
 
   @override
   void initState() {
     super.initState();
     getCompany();
+    setState(() {
+      if(widget.product.image==null){
+        imageControl=0;
+      }else{
+        imageControl=1;
+      }
+    });
   }
 
   @override
@@ -30,13 +38,15 @@ class _ProductCardWidgetState extends State<ProductCardWidget>{
       child: ListTile(
         leading: Hero(
           tag: widget.product.name,
-          child: Container(
+          child: (imageControl==0)? Image.asset('assets/images/noImage.PNG'):
+          Container(
             width: 80.0,
             height: 60.0,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
-                    widget.product.image),
+                  widget.product.image,
+                ),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(5),

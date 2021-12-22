@@ -11,6 +11,19 @@ class CategoryCardWidget extends StatefulWidget {
 }
 
 class _CategoryCardWidgetState extends State<CategoryCardWidget>{
+  var imageControl=0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      if(widget.subCategories.image==null){
+        imageControl=0;
+      }else{
+        imageControl=1;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +48,8 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget>{
           children: [
             Hero(
               tag: widget.subCategories.name,
-              child: Container(
+              child: (imageControl==0)? Image.asset('assets/images/noImage.PNG'):
+              Container(
                 width: double.infinity,
                 height: 100.0,
                 decoration: BoxDecoration(
@@ -51,11 +65,11 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget>{
                 ),
               ),
             ),
-            SizedBox(height: 10.0,),
+            SizedBox(height: 5.0,),
             Text(
               widget.subCategories.name,
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 12,
                 color: Colors.black,
               ),
               textAlign: TextAlign.center,

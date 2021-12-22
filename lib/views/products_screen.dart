@@ -50,7 +50,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
   }
 
   void fetchProducts() async {
-    //product doldurulacak firebase ile
     var incomingProductList =
         await service.getProductsBySubcategoryId(widget.subCategory.id);
     if (incomingProductList.isEmpty) {

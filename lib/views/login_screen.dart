@@ -28,73 +28,76 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
 
-    return Background(
-      headerText: "Login",
-      haveBackButton: false,
-      onBackButtonPress: () {},
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RoundedInputField(
-            hintText: "E-mail",
-            onChanged: (value) { _eMail = value; },
-            isTextHidden: false,
-          ),
-          RoundedInputField(
-              hintText: "Password",
-              onChanged: (value) { _password = value; },
-              isTextHidden: true
-          ),
-          RoundedButton(
-            text: "Login",
-            onPress: () { _login(context); },
-          ),
-          Text(
-            "Don`t have an account?",
-            style: TextStyle(color: Color.fromARGB(255, 146, 146, 146), fontWeight: FontWeight.w300, fontSize: 20),
-          ),
-          FlatButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return RegisterScreen();
-                  },
-                ),
-              );
-            },
-            child: Text(
-              "Register",
-              style: TextStyle(color: Color.fromARGB(255, 228, 121, 120), fontWeight: FontWeight.w300, fontSize: 20),
+    return ListView(
+      children:[ Background(
+        headerText: "Login",
+        haveBackButton: false,
+        onBackButtonPress: () {},
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            RoundedInputField(
+              hintText: "E-mail",
+              onChanged: (value) { _eMail = value; },
+              isTextHidden: false,
             ),
-          ),
-
-          Text(
-            "Forgot Passsword?",
-            style: TextStyle(color: Color.fromARGB(255, 146, 146, 146), fontWeight: FontWeight.w300, fontSize: 20),
-          ),
-          FlatButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ForgotPasswordScreen();
-                  },
-                ),
-              );
-            },
-            child: Text(
-              "Reset Password",
-              style: TextStyle(color: Color.fromARGB(255, 228, 121, 120), fontWeight: FontWeight.w300, fontSize: 20),
+            RoundedInputField(
+                hintText: "Password",
+                onChanged: (value) { _password = value; },
+                isTextHidden: true
             ),
-          ),
+            RoundedButton(
+              text: "Login",
+              onPress: () { _login(context); },
+            ),
+            Text(
+              "Don`t have an account?",
+              style: TextStyle(color: Color.fromARGB(255, 146, 146, 146), fontWeight: FontWeight.w300, fontSize: 20),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return RegisterScreen();
+                    },
+                  ),
+                );
+              },
+              child: Text(
+                "Register",
+                style: TextStyle(color: Color.fromARGB(255, 228, 121, 120), fontWeight: FontWeight.w300, fontSize: 20),
+              ),
+            ),
+
+            Text(
+              "Forgot Passsword?",
+              style: TextStyle(color: Color.fromARGB(255, 146, 146, 146), fontWeight: FontWeight.w300, fontSize: 20),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ForgotPasswordScreen();
+                    },
+                  ),
+                );
+              },
+              child: Text(
+                "Reset Password",
+                style: TextStyle(color: Color.fromARGB(255, 228, 121, 120), fontWeight: FontWeight.w300, fontSize: 20),
+              ),
+            ),
 
 
 
-        ],
+          ],
+        ),
       ),
+    ]
     );
   }
 
