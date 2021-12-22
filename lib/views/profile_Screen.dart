@@ -8,6 +8,7 @@ import 'package:siparisin_kapinda/service/firestore_service.dart';
 import 'package:siparisin_kapinda/views/info_screen.dart';
 import 'package:siparisin_kapinda/views/addresses_screen.dart';
 import 'package:siparisin_kapinda/globals.dart' as globals;
+import 'package:siparisin_kapinda/views/order-history.dart';
 import '../globals.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -34,7 +35,6 @@ class _ProfilePageState extends State<ProfilePage> {
     fetchUserInfo();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -224,7 +224,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     children: [
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const OrderHistoryScreen()),
+                            );
+                          },
                           child: const Text(
                             'Siparişlerim',
                             style: TextStyle(fontSize: 14, color: Colors.black),
