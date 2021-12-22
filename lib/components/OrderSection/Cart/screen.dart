@@ -38,7 +38,7 @@ class _CartScreenState extends State<CartScreen> {
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[Text("Total Price"), Text(total.toString())],
+              children: <Widget>[Text("Toplam"), Text(total.toString())],
             ),
           ),
           Column(
@@ -48,7 +48,7 @@ class _CartScreenState extends State<CartScreen> {
               RaisedButton(
                 color: Colors.blueAccent,
                 child: Text(
-                  "Checkout",
+                  "Ödeme",
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {

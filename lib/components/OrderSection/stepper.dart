@@ -28,7 +28,7 @@ class _StepperDemoState extends State<StepperDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-          title: "Address",
+          title: "Adres",
           appBar: AppBar(),
           widgets: <Widget>[Icon(Icons.more_vert)]),
       body: Container(
@@ -54,7 +54,7 @@ class _StepperDemoState extends State<StepperDemo> {
                 RaisedButton(
                   color: Colors.blueAccent,
                   child: Text(
-                    "Checkout",
+                    "Ödeme",
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
