@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:siparisin_kapinda/models/OrderSection/cart_model.dart';
 import 'package:siparisin_kapinda/models/UserSection/addresses_model.dart';
 import 'package:siparisin_kapinda/models/category_model.dart';
 import 'package:siparisin_kapinda/models/company_model.dart';
 import 'package:siparisin_kapinda/models/extra_model.dart';
+import 'package:siparisin_kapinda/models/order_history_model.dart';
 import 'package:siparisin_kapinda/models/product_model.dart';
 import 'package:siparisin_kapinda/models/sub_category_model.dart';
 import 'package:siparisin_kapinda/models/user_addresses_model.dart';
@@ -27,6 +30,23 @@ class FirestoreService {
       }
     });
     print(list);
+    return list;
+  }
+
+  Future<List<Order>> getUserOrderHistory(var userId) async {
+    late List<Order> list = <Order>[];
+
+    await FirebaseFirestore.instance
+        .collection('orders')
+        .where('user_id', isEqualTo: userId)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      for (var doc in querySnapshot.docs) {
+        list.add(Order(
+            doc["address_id"], doc["items"], doc["order_id"], doc["user_id"]));
+      }
+    });
+
     return list;
   }
 
@@ -74,6 +94,7 @@ class FirestoreService {
         .then((value) => print("phoneNumber Updated"))
         .catchError((error) => print("Failed to update phoneNumber: $error"));
   }
+
   //henüz kullanılmıyor-extra
   Future<List> getAllCategories() async {
     late List<CategoryModel> categoryList = <CategoryModel>[];
@@ -119,8 +140,7 @@ class FirestoreService {
             doc["price"],
             doc["subCategoryId"],
             doc["description"],
-            doc["extra"]
-        ));
+            doc["extra"]));
       });
     });
     return productList;
@@ -156,8 +176,7 @@ class FirestoreService {
             doc["price"],
             doc["subCategoryId"],
             doc["description"],
-            doc["extra"]
-        ));
+            doc["extra"]));
       });
     });
     return productList;
@@ -201,8 +220,16 @@ class FirestoreService {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        product = ProductModel(doc["available"], doc["company_id"], doc["id"],
-            doc["image"], doc["name"], doc["price"], doc["subCategoryId"], doc["description"], doc["extra"]);
+        product = ProductModel(
+            doc["available"],
+            doc["company_id"],
+            doc["id"],
+            doc["image"],
+            doc["name"],
+            doc["price"],
+            doc["subCategoryId"],
+            doc["description"],
+            doc["extra"]);
       });
     });
     return product;
@@ -267,12 +294,12 @@ class FirestoreService {
   }
 
   Future addToCart2(var userID, var item_id) async {
-    getExtras(item_id).then((value) =>
-    {
-      //value değeri de eklenecek
-      addToCart(userID, item_id,value),
-      deleteExtrasByProductId(item_id), //eklendikten sonra extras collectiondan silindi.
-    });
+    getExtras(item_id).then((value) => {
+          //value değeri de eklenecek
+          addToCart(userID, item_id, value),
+          deleteExtrasByProductId(
+              item_id), //eklendikten sonra extras collectiondan silindi.
+        });
   }
 
   Future addToCart(var userID, var item_id, var value) async {
@@ -331,7 +358,7 @@ class FirestoreService {
     }
   }
 
-  Future<List> getExtras(item_id)  async{
+  Future<List> getExtras(item_id) async {
     late List<ExtraModel> extraList = <ExtraModel>[];
     await FirebaseFirestore.instance
         .collection('extras')
@@ -339,21 +366,24 @@ class FirestoreService {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        extraList.add(ExtraModel(doc["productId"],doc["name"]));
+        extraList.add(ExtraModel(doc["productId"], doc["name"]));
       });
     });
     return extraList;
   }
 
-  Future addExtras(productId,name) async {
+  Future addExtras(productId, name) async {
     await FirebaseFirestore.instance
         .collection('extras')
-        .add({'productId': productId,'name': name});
+        .add({'productId': productId, 'name': name});
   }
 
-  Future deleteExtrasByName(productId,name) async {
+  Future deleteExtrasByName(productId, name) async {
     var collection = FirebaseFirestore.instance.collection('extras');
-    var snapshot = await collection.where('name', isEqualTo: name).where('productId', isEqualTo: productId).get();
+    var snapshot = await collection
+        .where('name', isEqualTo: name)
+        .where('productId', isEqualTo: productId)
+        .get();
     for (var doc in snapshot.docs) {
       await doc.reference.delete();
     }
@@ -361,7 +391,8 @@ class FirestoreService {
 
   Future deleteExtrasByProductId(productId) async {
     var collection = FirebaseFirestore.instance.collection('extras');
-    var snapshot = await collection.where('productId', isEqualTo: productId).get();
+    var snapshot =
+        await collection.where('productId', isEqualTo: productId).get();
     for (var doc in snapshot.docs) {
       await doc.reference.delete();
     }
