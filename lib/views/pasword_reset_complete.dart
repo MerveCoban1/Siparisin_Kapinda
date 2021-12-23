@@ -20,14 +20,14 @@ class Body extends StatelessWidget {
 
 
     return Background(
-      headerText: "Reset Password",
+      headerText: "Şifre Sıfırla",
       haveBackButton: true,
       onBackButtonPress: () { _backButton(context); },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-              "Instructions are sent to your email address.\n Check your email to reset your password.",
+              "Talimatlat e-posta adresinize gönderildi.\n Şifrenizi sıfırlamak için e-posta adresinizi kontrol edin.",
               style: TextStyle(color: Color.fromARGB(255, 146, 146, 146), fontWeight: FontWeight.w300, fontSize: 20), textAlign: TextAlign.center
           ),
 

@@ -34,7 +34,7 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Background(
-      headerText: "Register",
+      headerText: "Kayıt Ol",
       haveBackButton: true,
       onBackButtonPress: () {
         Navigator.push(
@@ -50,37 +50,37 @@ class Body extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           RoundedInputField(
-            hintText: "E-mail",
+            hintText: "E-posta",
             onChanged: (value) { _eMail = value; },
             isTextHidden: false,
           ),
           RoundedInputField(
-            hintText: "First Name",
+            hintText: "Ad",
             onChanged: (value) { _firstName = value; },
             isTextHidden: false,
           ),
           RoundedInputField(
-            hintText: "Last Name",
+            hintText: "Soyad",
             onChanged: (value) { _lastName = value; },
             isTextHidden: false,
           ),
           RoundedInputField(
-            hintText: "Phone Number",
+            hintText: "Telefon Numarası",
             onChanged: (value) { _phoneNumber = value; },
             isTextHidden: false,
           ),
           RoundedInputField(
-            hintText: "Password",
+            hintText: "Şifre",
             onChanged: (value) { _password = value; },
             isTextHidden: true,
           ),
           RoundedInputField(
-            hintText: "Password Again",
+            hintText: "Şifreyi Tekrarla",
             onChanged: (value) { _passwordAgain = value; },
             isTextHidden: true,
           ),
           RoundedButton(
-            text: "Register",
+            text: "Kayıt Ol",
             onPress: () { _register(context); },
           ),
         ],
