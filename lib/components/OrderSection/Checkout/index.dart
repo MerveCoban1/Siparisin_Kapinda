@@ -42,7 +42,7 @@ class _CheckoutState extends State<Checkout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-          title: "Checkout",
+          title: "Ödeme",
           appBar: AppBar(),
           widgets: <Widget>[Icon(Icons.more_vert)]),
       body: Container(
@@ -106,7 +106,7 @@ class _CheckoutState extends State<Checkout> {
                         themeColor: Colors.blue,
                         textColor: Colors.white,
                         cardNumberDecoration: InputDecoration(
-                          labelText: 'Number',
+                          labelText: 'Kart Numarası',
                           hintText: 'XXXX XXXX XXXX XXXX',
                           hintStyle: const TextStyle(color: Colors.white),
                           labelStyle: const TextStyle(color: Colors.white),
@@ -118,7 +118,7 @@ class _CheckoutState extends State<Checkout> {
                           labelStyle: const TextStyle(color: Colors.white),
                           focusedBorder: border,
                           enabledBorder: border,
-                          labelText: 'Expired Date',
+                          labelText: 'Son kullanma tarihi',
                           hintText: 'XX/XX',
                         ),
                         cvvCodeDecoration: InputDecoration(
@@ -134,7 +134,7 @@ class _CheckoutState extends State<Checkout> {
                           labelStyle: const TextStyle(color: Colors.white),
                           focusedBorder: border,
                           enabledBorder: border,
-                          labelText: 'Card Holder',
+                          labelText: 'isim soyisim',
                         ),
                         onCreditCardModelChange: onCreditCardModelChange,
                       ),
@@ -154,7 +154,7 @@ class _CheckoutState extends State<Checkout> {
                         child: Container(
                           margin: const EdgeInsets.all(12),
                           child: const Text(
-                            'Buy',
+                            'Öde',
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'halter',
@@ -167,7 +167,7 @@ class _CheckoutState extends State<Checkout> {
                           if (formKey.currentState!.validate()) {
                             pay();
                           } else {
-                            print('invalid!');
+                            print('Hatalı!');
                           }
                         },
                       ),

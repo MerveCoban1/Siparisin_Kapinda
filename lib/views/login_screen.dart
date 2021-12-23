@@ -30,28 +30,28 @@ class Body extends StatelessWidget {
 
     return ListView(
       children:[ Background(
-        headerText: "Login",
+        headerText: "Giriş Yap",
         haveBackButton: false,
         onBackButtonPress: () {},
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RoundedInputField(
-              hintText: "E-mail",
+              hintText: "E-posta",
               onChanged: (value) { _eMail = value; },
               isTextHidden: false,
             ),
             RoundedInputField(
-                hintText: "Password",
+                hintText: "Şifre",
                 onChanged: (value) { _password = value; },
                 isTextHidden: true
             ),
             RoundedButton(
-              text: "Login",
+              text: "Giriş Yap",
               onPress: () { _login(context); },
             ),
             Text(
-              "Don`t have an account?",
+              "Bir hesabın yok mu?",
               style: TextStyle(color: Color.fromARGB(255, 146, 146, 146), fontWeight: FontWeight.w300, fontSize: 20),
             ),
             FlatButton(
@@ -66,13 +66,13 @@ class Body extends StatelessWidget {
                 );
               },
               child: Text(
-                "Register",
+                "Kayıt Ol",
                 style: TextStyle(color: Color.fromARGB(255, 228, 121, 120), fontWeight: FontWeight.w300, fontSize: 20),
               ),
             ),
 
             Text(
-              "Forgot Passsword?",
+              "Şifreni mi unuttun?",
               style: TextStyle(color: Color.fromARGB(255, 146, 146, 146), fontWeight: FontWeight.w300, fontSize: 20),
             ),
             FlatButton(
@@ -87,7 +87,7 @@ class Body extends StatelessWidget {
                 );
               },
               child: Text(
-                "Reset Password",
+                "Şifre Sıfırla",
                 style: TextStyle(color: Color.fromARGB(255, 228, 121, 120), fontWeight: FontWeight.w300, fontSize: 20),
               ),
             ),

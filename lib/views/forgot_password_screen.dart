@@ -22,23 +22,23 @@ class Body extends StatelessWidget {
 
 
     return Background(
-      headerText: "Reset Password",
+      headerText: "Şifre Sıfırla",
       haveBackButton: true,
       onBackButtonPress: () { _backButton(context); },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-              "Enter your username or email and we will email you instructions on how to reset your password.\n",
+              "Kullanıcı adınızı veya e-posta adresinizi girin, şifrenizi nasıl sıfırlayacağınızla ilgili talimatları size e-posta ile gönderelim.\n",
               style: TextStyle(color: Color.fromARGB(255, 146, 146, 146), fontWeight: FontWeight.w300, fontSize: 20), textAlign: TextAlign.center
           ),
           RoundedInputField(
-            hintText: "E-mail or Username",
+            hintText: "E-posta veya Kullanıcı Adı",
             onChanged: (value) { _eMail = value; },
             isTextHidden: false,
           ),
           RoundedButton(
-            text: "Submit",
+            text: "Gönder",
             onPress: () { _submit(context); },
           ),
 
