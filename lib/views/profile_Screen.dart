@@ -81,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('users')
-                      .where('userId', isEqualTo: loggedUserId)
+                      .where('userId', isEqualTo: globals.loggedUserId)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -259,7 +259,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       String url = await FirebaseStorage.instance
           .ref()
-          .child(loggedUserId.toString())
+          .child(globals.loggedUserId.toString())
           .child("profilResmi")
           .getDownloadURL();
       setState(() {
@@ -295,7 +295,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     Reference referance = FirebaseStorage.instance
         .ref()
-        .child(loggedUserId.toString())
+        .child(globals.loggedUserId.toString())
         .child("profilResmi");
     UploadTask yuklemeGorevi = referance.putFile(imageFile);
     String url = await (await yuklemeGorevi).ref.getDownloadURL();
