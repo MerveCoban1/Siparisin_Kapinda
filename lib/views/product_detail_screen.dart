@@ -16,20 +16,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   FirestoreService service = FirestoreService();
   var productExtraKeys;
   var productExtraValues;
-  var selectedName=[];
-  var imageControl=0;
+  var selectedName = [];
+  var imageControl = 0;
 
   @override
   void initState() {
     deleteExtras();
     setState(() {
-      productExtraKeys=widget.product.extra.keys.toList();
-      productExtraValues=widget.product.extra.values.toList();
+      productExtraKeys = widget.product.extra.keys.toList();
+      productExtraValues = widget.product.extra.values.toList();
 
-      if(widget.product.image==null){
-          imageControl=0;
-      }else{
-          imageControl=1;
+      if (widget.product.image == null) {
+        imageControl = 0;
+      } else {
+        imageControl = 1;
       }
     });
     super.initState();
@@ -44,13 +44,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             children: [
               Hero(
                 tag: widget.product.name,
-                child: (imageControl==0)? Image.asset('assets/images/noImage.PNG'):
-                Image.network(
-                  widget.product.image,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.40,
-                  fit: BoxFit.cover,
-                ),
+                child: (imageControl == 0)
+                    ? Image.asset('assets/images/noImage.PNG')
+                    : Image.network(
+                        widget.product.image,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.40,
+                        fit: BoxFit.cover,
+                      ),
               ),
               IconButton(
                 icon: Icon(
@@ -95,7 +96,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 width: MediaQuery.of(context).size.width * 0.90,
                 height: MediaQuery.of(context).size.height * 0.1,
                 child: Text(
-                  ""+widget.product.description,
+                  "" + widget.product.description,
                   style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.bold,
@@ -116,12 +117,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.90,
                 height: MediaQuery.of(context).size.height * 0.07,
-                child:  ListView.builder(
+                child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: productExtraKeys.length,
                   itemBuilder: (BuildContext context, int index) => Card(
-                    child: ExtraCardWidget(widget.product.id,productExtraKeys[index],productExtraValues[index],selectedName),
+                    child: ExtraCardWidget(
+                        widget.product.id,
+                        productExtraKeys[index],
+                        productExtraValues[index],
+                        selectedName),
                   ),
                 ),
               ),
@@ -144,7 +149,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 onTap: () {
                   if (widget.product.available) {
                     Navigator.pop(context);
-                    service.addToCart2(1, widget.product.id);
+                    service.addToCart(1, widget.product.id);
                   }
                 },
                 child: Container(
@@ -175,6 +180,5 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
-  void deleteExtras() async{
-  }
+  void deleteExtras() async {}
 }

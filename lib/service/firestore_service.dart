@@ -293,19 +293,7 @@ class FirestoreService {
     }
   }
 
-  Future addToCart2(var userID, var item_id) async {
-    getExtras(item_id).then((value) => {
-          //value değeri de eklenecek
-          addToCart(userID, item_id, value),
-          deleteExtrasByProductId(
-              item_id), //eklendikten sonra extras collectiondan silindi.
-        });
-  }
-
-  Future addToCart(var userID, var item_id, var value) async {
-    print("******************");
-    print(value); //[Instance of extramodel,] şeklinde dizi olarak geliyor.
-    print("******************");
+  Future addToCart(var userID, var item_id) async {
     try {
       var itemList = await getCart(userID);
 
