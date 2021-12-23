@@ -74,19 +74,6 @@ class FirestoreService {
         .then((value) => print("phoneNumber Updated"))
         .catchError((error) => print("Failed to update phoneNumber: $error"));
   }
-  //henüz kullanılmıyor-extra
-  Future<List> getAllCategories() async {
-    late List<CategoryModel> categoryList = <CategoryModel>[];
-    await FirebaseFirestore.instance
-        .collection('category')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        categoryList.add(CategoryModel(doc["id"], doc["name"]));
-      });
-    });
-    return categoryList;
-  }
 
   Future<List> getSubcategoriesByCategoryId(var categoryId) async {
     late List<SubCategoryModel> subcategoryList = <SubCategoryModel>[];

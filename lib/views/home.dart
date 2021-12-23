@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:siparisin_kapinda/auth/auth_service.dart';
-import 'package:siparisin_kapinda/auth/user_model.dart';
 import 'package:siparisin_kapinda/components/OrderSection/Cart/screen.dart';
 import 'package:siparisin_kapinda/components/OrderSection/Checkout/index.dart';
 import 'package:siparisin_kapinda/components/OrderSection/stepper.dart';

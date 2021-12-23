@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:siparisin_kapinda/models/OrderSection/cart_model.dart';
-import 'package:siparisin_kapinda/models/company_model.dart';
 import 'package:siparisin_kapinda/models/product_model.dart';
 import 'package:siparisin_kapinda/service/firestore_service.dart';
-import 'package:siparisin_kapinda/views/product_detail_screen.dart';
 
 class CartItemWidget extends StatefulWidget {
   late CartModel cart;
@@ -15,12 +13,13 @@ class CartItemWidget extends StatefulWidget {
 
 class _CartItemWidgetState extends State<CartItemWidget> {
   FirestoreService service = FirestoreService();
-  late ProductModel productModel;
+  ProductModel productModel=new ProductModel(true, 5, 5, "http://data.pixiz.com/output/user/frame/preview/api/big/8/5/6/4/2234658_63039.jpg", "name", "price", 5, "description", "extra");
 
   @override
   void initState() {
     super.initState();
     getProductDetail();
+
   }
 
   @override

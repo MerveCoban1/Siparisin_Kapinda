@@ -33,58 +33,66 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Background(
-      headerText: "Register",
-      haveBackButton: true,
-      onBackButtonPress: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return LoginScreen();
-            },
-          ),
-        );
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RoundedInputField(
-            hintText: "E-mail",
-            onChanged: (value) { _eMail = value; },
-            isTextHidden: false,
-          ),
-          RoundedInputField(
-            hintText: "First Name",
-            onChanged: (value) { _firstName = value; },
-            isTextHidden: false,
-          ),
-          RoundedInputField(
-            hintText: "Last Name",
-            onChanged: (value) { _lastName = value; },
-            isTextHidden: false,
-          ),
-          RoundedInputField(
-            hintText: "Phone Number",
-            onChanged: (value) { _phoneNumber = value; },
-            isTextHidden: false,
-          ),
-          RoundedInputField(
-            hintText: "Password",
-            onChanged: (value) { _password = value; },
-            isTextHidden: true,
-          ),
-          RoundedInputField(
-            hintText: "Password Again",
-            onChanged: (value) { _passwordAgain = value; },
-            isTextHidden: true,
-          ),
-          RoundedButton(
-            text: "Register",
-            onPress: () { _register(context); },
-          ),
-        ],
-      ),
+    return ListView(
+      children:[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 78.0,
+              child: RoundedInputField(
+                hintText: "E-mail",
+                onChanged: (value) { _eMail = value; },
+                isTextHidden: false,
+              ),
+            ),
+            Container(
+              height: 78.0,
+              child: RoundedInputField(
+                hintText: "First Name",
+                onChanged: (value) { _firstName = value; },
+                isTextHidden: false,
+              ),
+            ),
+            Container(
+              height: 78.0,
+              child: RoundedInputField(
+                hintText: "Last Name",
+                onChanged: (value) { _lastName = value; },
+                isTextHidden: false,
+              ),
+            ),
+            Container(
+              height: 78.0,
+              child: RoundedInputField(
+                hintText: "Phone Number",
+                onChanged: (value) { _phoneNumber = value; },
+                isTextHidden: false,
+              ),
+            ),
+            Container(
+              height: 78.0,
+              child: RoundedInputField(
+                hintText: "Password",
+                onChanged: (value) { _password = value; },
+                isTextHidden: true,
+              ),
+            ),
+            Container(
+              height: 78.0,
+              child: RoundedInputField(
+                hintText: "Password Again",
+                onChanged: (value) { _passwordAgain = value; },
+                isTextHidden: true,
+              ),
+            ),
+            RoundedButton(
+              text: "Register",
+              onPress: () { _register(context); },
+            ),
+          ],
+        ),
+      ]
     );
   }
 
