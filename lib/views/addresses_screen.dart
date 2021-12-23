@@ -49,7 +49,7 @@ class _AddressesPageState extends State<AddressesPage> {
           body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('addresses')
-                .where('user_id', isEqualTo: loggedUserId)
+                .where('user_id', isEqualTo: globals.loggedUserId)
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
