@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:siparisin_kapinda/auth/auth_service.dart';
-import 'package:siparisin_kapinda/globals.dart';
+import 'package:siparisin_kapinda/globals.dart' as globals;
 import 'package:siparisin_kapinda/service/firestore_service.dart';
 
 class UpdateInfoPage extends StatefulWidget {
@@ -145,7 +145,7 @@ Widget createbody(context) {
                   onPressed: () {
                     //Kullanıcının girdiği değerler Firebase yazılıyor.
                     service.updateInformation(
-                        loggedUserId,
+                        globals.loggedUserId,
                         fNameController.text,
                         lNameController.text,
                         eMailController.text,
